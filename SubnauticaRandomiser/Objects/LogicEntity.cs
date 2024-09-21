@@ -25,13 +25,14 @@ namespace SubnauticaRandomiser.Objects
         public int MaxUsesPerGame;              // How often can this get used in recipes?
         public int UsedInRecipes;               // How often did this get used in recipes?
         public int Value;                       // Rough value/rarity in relation to other entities
+        public bool Ignore;                     // Whether the recipe should be ignored during randomization
 
         public bool HasPrerequisites => Prerequisites?.Count > 0;
         public bool HasRecipe => !(Recipe is null);
         public bool HasSpawnData => !(SpawnData is null);
 
         public LogicEntity(EntityType entityType, TechType techType, TechTypeCategory category, Blueprint blueprint = null, Recipe recipe = null,
-            List<SpawnData> spawnData = null, List<TechType> prerequisites = null, bool inLogic = false, int value = 0)
+            List<SpawnData> spawnData = null, List<TechType> prerequisites = null, bool inLogic = false, int value = 0, bool ignore = false)
         {
             EntityType = entityType;
             TechType = techType;
@@ -45,6 +46,8 @@ namespace SubnauticaRandomiser.Objects
             MaxUsesPerGame = 0;
             UsedInRecipes = 0;
             Value = value;
+            Ignore = ignore;
+
         }
 
         /// <summary>

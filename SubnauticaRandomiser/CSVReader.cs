@@ -159,6 +159,7 @@ namespace SubnauticaRandomiser
             List<TechType> prereqList = new List<TechType>();
             int value;
             int maxUses = 0;
+            bool ignore = false;
 
             Blueprint blueprint = null;
             List<TechType> blueprintUnlockConditions = new List<TechType>();
@@ -176,6 +177,7 @@ namespace SubnauticaRandomiser
             string cellsMaxUses = cells[5];
             string cellsBPUnlock = cells[6];
             string cellsBPDepth = cells[7];
+            string cellsIgnore = cells[8];
 
             // Now to convert the data in each cell to an object we can use.
             // Column 1: TechType
@@ -231,6 +233,10 @@ namespace SubnauticaRandomiser
             if (!string.IsNullOrEmpty(cellsBPDepth))
                 blueprintUnlockDepth = StringToInt(cellsBPDepth, "Blueprint Unlock Depth");
 
+            // Column 9: Ignore Recipe Randomization
+            if (!string.IsNullOrEmpty(cellsIgnore))
+                ignore = StringToBool(cellsIgnore, "Ignore");
+
             // Only if any of the blueprint components yielded anything, ship the entity with a blueprint.
             if ((blueprintUnlockConditions.Count > 0) || blueprintUnlockDepth != 0
                                                       || !blueprintDatabox
@@ -249,7 +255,7 @@ namespace SubnauticaRandomiser
                        + $" prerequisites, {value}, {maxUses}, ...");
 
             var entity = new LogicEntity(entityType, techType, category, blueprint, recipe, null, prereqList, false,
-                value)
+                value, ignore)
             {
                 AccessibleDepth = depth,
                 MaxUsesPerGame = maxUses

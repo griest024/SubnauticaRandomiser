@@ -101,6 +101,12 @@ namespace SubnauticaRandomiser.Logic.Recipes
                 _log.Debug($"[R] --- Recipe [{entity}] did not fulfill requirements, skipping.");
                 return false;
             }
+
+            if (entity.Ignore)
+            {
+                _log.Debug($"[R] --- Recipe [{entity}] is set to ignore, skipping.");
+                return true;
+            }
             
             _log.Debug("[R] Figuring out ingredients for " + entity);
             _mode.RandomiseIngredients(ref entity);
